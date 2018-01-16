@@ -1,0 +1,67 @@
+-------------------------------------
+|主题：
+-------------------------------------
+在win7物理机器上使用VirtualBox管理Ubuntu虚拟机
+关于Vmware与VirtualBox主客机互通，且都能连网的配置
+http://blog.csdn.net/zhangtaolmq/article/details/69240520
+
+-------------------------------------
+|目的：
+-------------------------------------
+
+
+
+
+-------------------------------------
+|第一步：准备好所有的物件。          
+-------------------------------------
+VirtualBox 图形用户界面
+版本 5.1.8 r111374 (Qt5.5.1)
+安装在：
+C:\Program Files\Oracle\VirtualBox
+
+
+vdi的目录：
+C:\Users\changshoumeng\VirtualBox VMs\
+
+-------------------------------------
+|第二步：环境的要求与配置
+-------------------------------------
+
+
+-------------------------------------
+|第三步：操作流程
+-------------------------------------
+
+
+
+-------------------------------------
+|第四步：遇到问题与解决
+-------------------------------------
+
+问题：VirtualBox使用vboxmanage clonehd实现虚拟机克隆
+http://blog.csdn.net/xuliq/article/details/51888442
+VBoxManage clonevdi   "C:\Users\changshoumeng\VirtualBox VMs\ubuntu16.04\ubuntu16.04.vdi" "D:\fs\programdata\virutalmachinedisk\ubuntu_a\ubuntu16.04_a.vdi"
+VBoxManage clonevdi   "D:\fs\programdata\virutalmachinedisk\ubuntu_a\ubuntu16.04_a.vdi" "D:\fs\programdata\virutalmachinedisk\ubuntu_b\ubuntu16.04_b.vdi"
+
+
+
+sudo vim /etc/hostname 
+node1
+
+sudo vim /etc/hosts
+127.0.1.1 node15
+
+注意：这里非得重启才能生效; shutdown -r now
+
+
+
+在/etc/default/grub中，GRUB_CMDLINE_LINUX里添加参数net.ifnames=0 biosdevname=0，如下图所示:
+vi /etc/network/interfaces
+  auto eth0
+    iface eth0 inet static
+    address 172.16.19.XX
+    netmask 255.255.255.0
+
+    这个要配置成修改后新的网卡名字
+    auto eth0 ##网卡名对应要正确
